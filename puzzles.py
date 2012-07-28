@@ -56,18 +56,22 @@ def add_node(node, value):
 	
 	
 def traverse_tree(root):
-	if root.left is None and root.right is None:
+
+    if root is None:
+        print None
+    elif root.left is None and root.right is None:
 		print root.value
-	else:
-		if root.left:
+    else:
+        if root.left:
 			traverse_tree(root.left)
-		print root.value
-		if root.right:
-			traverse_tree(root.right)
+        print root.value
+        if root.right:
+            traverse_tree(root.right)
 			
 	
 	
 tree = None
+traverse_tree(tree)
 tree = add_node(tree, 1)
 add_node(tree, 0)
 add_node(tree, -1)
