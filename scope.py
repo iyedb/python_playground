@@ -1,6 +1,6 @@
 
 
-x = 0
+x = 1
 
 def func(arg):
     x = arg
