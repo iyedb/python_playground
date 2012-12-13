@@ -34,7 +34,7 @@ def _quit():
 def show_window(thereason):
 	print thereason
 	if thereason == QSystemTrayIcon.ActivationReason.Trigger:
-		main_window.show()
+		main_window.showMaximized()
 
 
 #create the QApplication instance before any other widget
