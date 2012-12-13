@@ -1,7 +1,9 @@
-import sys
+#!/usr/bin/env python
 
+import sys
 from PySide.QtCore import *
-from PySide.QtGui import *
+from PySide.QtGui import QMainWindow,QGraphicsScene,QGraphicsView,QApplication,QSystemTrayIcon,QMenu, QIcon
+
 """
 # Create a Qt application
 app = QApplication(sys.argv)
@@ -14,44 +16,48 @@ sys.exit()
 class MainWindow(QMainWindow):
 	def __init__(self):
 		super(MainWindow, self).__init__()
+		self.scene = QGraphicsScene()
+		self.scene.addText("Hello, world!")
+		self.view = QGraphicsView(self.scene)
+		super(MainWindow, self).setCentralWidget(self.view)
+		
 	def closeEvent(self, event):
 		event.ignore()
 		self.hide()
 		
 		
-
+#refactor 		
 def _quit():
 	app.quit()
 	qDebug('bye!')
 	
-app = QApplication(sys.argv)
-systrayico = QSystemTrayIcon(QIcon("icon18.gif"))
-systrayico.show()
-systrayico.showMessage('hello', 'hello', msecs=2000)
-
-def what(thereason):
+def show_window(thereason):
 	print thereason
 	if thereason == QSystemTrayIcon.ActivationReason.Trigger:
 		main_window.show()
-		
 
+
+#create the QApplication instance before any other widget
+app = QApplication(sys.argv)		
+main_window = MainWindow()		
+	
+	
+systrayico = QSystemTrayIcon(QIcon("icon18.gif"))
 menu = QMenu()
 quitAction = menu.addAction('Quit')
 quitAction.triggered.connect(_quit)
-systrayico.activated.connect(what)
-
+systrayico.activated.connect(show_window)
 systrayico.setContextMenu(menu)
+systrayico.show()
 
-scene = QGraphicsScene()
-scene.addText("Hello, world!")
+print app.desktop().screenGeometry(app.desktop().primaryScreen()).topLeft()
+print app.desktop().screenGeometry(app.desktop().primaryScreen()).bottomRight()
 
-view = QGraphicsView(scene)
+print app.desktop().availableGeometry(app.desktop().primaryScreen()).topLeft()
+print app.desktop().availableGeometry(app.desktop().primaryScreen()).bottomRight()
 
-
-main_window = MainWindow()
-main_window.setCentralWidget(view)
-
+sys.exit(app.exec_())
 
 
-app.exec_()
-sys.exit()
+
+	
