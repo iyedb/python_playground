@@ -2,6 +2,7 @@
 
 import sys
 from PySide.QtGui import QApplication,QSystemTrayIcon, QIcon
+from PySide.QtCore import QUrl
 from mainwindow import MainWindow
 		
 #refactor 		
@@ -10,7 +11,7 @@ def _quit():
 	qDebug('bye!')
 	
 def show_window(thereason):
-	
+
 	if thereason == QSystemTrayIcon.ActivationReason.Trigger:
 		if main_window.isVisible() == True:
 			main_window.hide()
@@ -18,18 +19,17 @@ def show_window(thereason):
 
 
 #create the QApplication instance before any other widget
-app = QApplication(sys.argv)		
-
+app = QApplication(sys.argv)
+app.setQuitOnLastWindowClosed(False)	
 	
 systrayico = QSystemTrayIcon(QIcon("y18.gif"))
 systrayico.activated.connect(show_window)
 systrayico.show()
 
-
 x_pos = systrayico.geometry().left()
 y_pos = app.desktop().availableGeometry(app.desktop().primaryScreen()).topLeft().y()
 
-main_window = MainWindow(x_pos, y_pos)
+main_window = MainWindow(x_pos, y_pos, 420, 500)
 
 sys.exit(app.exec_())
 
