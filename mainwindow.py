@@ -20,36 +20,17 @@ class MainWindow(QMainWindow):
 		self.setWindowFlags(self.windowFlags() | Qt.CustomizeWindowHint)
 		self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
 		self.setWindowFlags(self.windowFlags() & ~Qt.WindowMinimizeButtonHint)
-
-		"""
-		self.scene = QGraphicsScene()
-		self.scene.addText("Hello, world!")
-		self.view = QGraphicsView(self.scene)
-		"""
 		self.view = QWebView(self)
 		self.view.page().setViewportSize(QSize(width, height))
-		#self.view.setHtml( self.generate_html() )
-		#self.view.setHtml( u'Hello, world!' )	
 		super(MainWindow, self).setCentralWidget(self.view)
-	"""	
-	def closeEvent(self, event):
-		event.ignore()
-		self.hide()
-	"""
-
+	
 	def showEvent(self, event):
-		#print event.spontaneous()
-		#print event.type()
 		self.view.setHtml( self.generate_html() )
 
 	def generate_html(self):
-
 		doc = urllib2.urlopen('http://news.ycombinator.com/')
-		s = doc.read()
-		unicode_string = s.decode('utf-8')
+		unicode_string = doc.read().decode('utf-8')
 		e = etree.fromstring(unicode_string, etree.HTMLParser())
-		html = StringIO.StringIO()
-		#f = codecs.open('res.html', 'w', 'utf-8')
 		template_file = QUrl.fromLocalFile('template.html')	
 		template = Template( filename=template_file.path() )
 		urls = []
@@ -60,15 +41,8 @@ class MainWindow(QMainWindow):
 					u_s = i.text.decode('utf-8')
 				else:
 					u_s = i.text
-				#html.write( str('<p style="color:white;text-align:left;background-color:black">').decode('utf-8') )
-				#html.write(u_s)
-				#html.write( str('</p>').decode('utf-8') )
 				urls.append(u_s)
 
-		#ret = html.getvalue()
-		#f.write(ret)
-		#html.close()
-		#return ret
 		return template.render_unicode(rows=urls)
 
 
