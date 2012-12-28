@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import sys
+import sys,os
 from PySide.QtGui import QApplication,QSystemTrayIcon, QIcon
-from PySide.QtCore import QUrl
+from PySide.QtCore import QUrl, QSize
 from mainwindow import MainWindow
 		
 #refactor 		
@@ -17,12 +17,13 @@ def show_window(thereason):
 			main_window.hide()
 		main_window.show()
 
-
 #create the QApplication instance before any other widget
 app = QApplication(sys.argv)
 app.setQuitOnLastWindowClosed(False)	
-	
-systrayico = QSystemTrayIcon(QIcon("y18.gif"))
+
+ico = QIcon(os.path.join(os.getcwd(),'y22w.png'))
+
+systrayico = QSystemTrayIcon(ico)
 systrayico.activated.connect(show_window)
 systrayico.show()
 

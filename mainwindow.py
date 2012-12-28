@@ -31,18 +31,21 @@ class MainWindow(QMainWindow):
 		doc = urllib2.urlopen('http://news.ycombinator.com/')
 		unicode_string = doc.read().decode('utf-8')
 		e = etree.fromstring(unicode_string, etree.HTMLParser())
-		template_file = QUrl.fromLocalFile('template.html')	
-		template = Template( filename=template_file.path() )
-		urls = []
 
+		urls = []
 		for i in e.xpath('//td/a'):
 			if len(i.getparent().keys()) == 1 and i.getparent().values()[0] == 'title':
 				if isinstance(i.text, str):
 					u_s = i.text.decode('utf-8')
 				else:
 					u_s = i.text
+				if u_s == u'More':
+					continue
+				subtext = i.getparent().getparent().getnext()
 				urls.append(u_s)
 
+		template_file = QUrl.fromLocalFile('template.html')	
+		template = Template( filename=template_file.path() )	
 		return template.render_unicode(rows=urls)
 
 
