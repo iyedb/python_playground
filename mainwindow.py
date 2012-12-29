@@ -1,10 +1,8 @@
 from PySide.QtCore import Qt, QUrl, QSize
-from PySide.QtGui import QMainWindow, QGraphicsScene, QGraphicsView, QApplication, QDesktopServices
+from PySide.QtGui import QMainWindow, QApplication, QDesktopServices
 from PySide.QtWebKit import QWebView, QWebPage
 from lxml import etree
-import urllib2
-import codecs
-import StringIO
+from urllib2 import urlopen
 from mako.template import Template
 
 
@@ -33,34 +31,8 @@ class MainWindow(QMainWindow):
 		self.view.setHtml( self.generate_html() )
 
 	def generate_html(self):
-		"""
-		doc = urllib2.urlopen('http://news.ycombinator.com/')
-		unicode_string = doc.read().decode('utf-8')
-		e = etree.fromstring(unicode_string, etree.HTMLParser())
-
-		urls = []
-		for i in e.xpath('//td/a'):
-			if len(i.getparent().keys()) == 1 and i.getparent().values()[0] == 'title':
-				if isinstance(i.text, str):
-					u_s = i.text.decode('utf-8')
-				else:
-					u_s = i.text
-				if u_s == u'More':
-					continue
-				subtext = i.getparent().getparent().getnext()
-				urls.append(u_s)
-
-		template_file = QUrl.fromLocalFile('template.html')	
-		template = Template( filename=template_file.path() )	
-		return template.render_unicode(rows=urls)
-		"""
-
-		doc = urllib2.urlopen('http://news.ycombinator.com/')
-		unicode_string = doc.read().decode('utf-8')
-		e = etree.fromstring(unicode_string, etree.HTMLParser())
 
 		def process_subtexttr(tr_tag):
-
 			strings = []
 			for i in tr_tag.itertext():
 				strings.append(i.decode('utf-8'))
@@ -76,6 +48,10 @@ class MainWindow(QMainWindow):
 				entry['comments_count'] = anchors[-1].text.decode('utf-8')
 				entry['comments_url'] = anchors[-1].get('href').decode('utf-8')
 			return entry
+		
+		doc = urlopen('http://news.ycombinator.com/')
+		unicode_string = doc.read().decode('utf-8')
+		e = etree.fromstring(unicode_string, etree.HTMLParser())
 
 		entries = []
 
