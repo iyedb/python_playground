@@ -1,5 +1,5 @@
 from PySide.QtCore import Qt, QUrl, QSize
-from PySide.QtGui import QMainWindow, QGraphicsScene, QGraphicsView, QApplication, QFont, QFontMetrics, QFontInfo
+from PySide.QtGui import QMainWindow, QGraphicsScene, QGraphicsView, QApplication, QDesktopServices
 from PySide.QtWebKit import QWebView, QWebPage
 from lxml import etree
 import urllib2
@@ -22,8 +22,13 @@ class MainWindow(QMainWindow):
 		self.setWindowFlags(self.windowFlags() & ~Qt.WindowMinimizeButtonHint)
 		self.view = QWebView(self)
 		self.view.page().setViewportSize(QSize(width, height))
+		self.view.page().setLinkDelegationPolicy(QWebPage.DelegateAllLinks)
+		self.view.page().linkClicked.connect(self.link_click_handler)
 		super(MainWindow, self).setCentralWidget(self.view)
 	
+	def link_click_handler(self, url):
+		QDesktopServices.openUrl(url)
+
 	def showEvent(self, event):
 		self.view.setHtml( self.generate_html() )
 

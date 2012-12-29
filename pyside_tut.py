@@ -21,7 +21,7 @@ def show_window(thereason):
 app = QApplication(sys.argv)
 app.setQuitOnLastWindowClosed(False)	
 
-ico = QIcon(os.path.join(os.getcwd(),'y22w.png'))
+ico = QIcon(os.path.join(os.getcwd(),'y16w.png'))
 
 systrayico = QSystemTrayIcon(ico)
 systrayico.activated.connect(show_window)

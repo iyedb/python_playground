@@ -6,19 +6,28 @@
 	<style type="text/css">
 
 		body {
-				background-color:black;
+			background-color:rgb(130,130,130);
 		}
 		
-		p.story {
+		p.story a {
 			color:white;
+			text-decoration:none;
 		}
 
 		p.subtext {
-			color:grey;
+			color:black;
 			font-size:small;
 
 		}
-		
+
+		P.subtext a {
+			color:black;
+			font-size:small;
+			text-decoration:none;
+
+		}
+
+
 	</style>
 </head>
 <body>
@@ -26,10 +35,11 @@
 	% for row in rows:
         <p class="story"><a href="${row['story_url']}">${row['story_link']}</a></p>\
         <p class="subtext">
-        	${row['site']}
-        	${row['timestamp']}
+        	${row['site']} |
+        	${row['timestamp']} |
         	<a href="http://news.ycombinator.com/${row['comments_url']}">${row['comments_count']}</a> 
         </p>
+        <hr/>
     % endfor
 
 </body>
