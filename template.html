@@ -6,22 +6,22 @@
 	<style type="text/css">
 
 		body {
-			background-color:rgb(130,130,130);
+			background-color:rgb(246,246,239);
 		}
 		
 		p.story a {
-			color:white;
+			color:black;
 			text-decoration:none;
 		}
 
 		p.subtext {
-			color:black;
+			color:rgb(130,130,130);
 			font-size:small;
 
 		}
 
 		P.subtext a {
-			color:black;
+			color:rgb(130,130,130);
 			font-size:small;
 			text-decoration:none;
 
@@ -32,6 +32,7 @@
 </head>
 <body>
 
+	<p style="background-color:#FF6600">Hacker News</p>
 	% for row in rows:
         <p class="story"><a href="${row['story_url']}">${row['story_link']}</a></p>\
         <p class="subtext">

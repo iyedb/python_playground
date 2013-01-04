@@ -7,7 +7,7 @@ Usage:
 
 from setuptools import setup
 
-APP = ['pyside_tut.py']
+APP = ['hnreader.py']
 DATA_FILES = ['y22w.png', 'template.html']
 OPTIONS = {'argv_emulation': True, 'includes': ['PySide.QtNetwork', 'lxml._elementpath', 'pygments.styles.default']}
 

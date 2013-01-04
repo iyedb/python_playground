@@ -11,7 +11,6 @@ def _quit():
 	qDebug('bye!')
 	
 def show_window(thereason):
-
 	if thereason == QSystemTrayIcon.ActivationReason.Trigger:
 		if main_window.isVisible() == True:
 			main_window.hide()
@@ -21,7 +20,7 @@ def show_window(thereason):
 app = QApplication(sys.argv)
 app.setQuitOnLastWindowClosed(False)	
 
-ico = QIcon(os.path.join(os.getcwd(),'y16w.png'))
+ico = QIcon(os.path.join(os.getcwd(),'yhn.png'))
 systrayico = QSystemTrayIcon(ico)
 systrayico.activated.connect(show_window)
 systrayico.show()
